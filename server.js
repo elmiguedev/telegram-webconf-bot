@@ -5,6 +5,9 @@ const axios = require('axios');
 const Telebot = require('telebot');
 const bot = new Telebot(process.env.TOKEN);
 
+app.on('/', function(req,res){
+    res.send('bot test :D');
+});
 
 bot.on('/entradas', function(msg){
   return msg.reply.text('probando bot de entradas');
