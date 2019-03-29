@@ -7,7 +7,7 @@ const bot = new Telebot(process.env.TOKEN);
 const app = express()
 
 // define bot commands
-bot.on('/entradas', function(msg){
+bot.on('/entradas', async (msg) => {
 
 
     // const data = await axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia');
