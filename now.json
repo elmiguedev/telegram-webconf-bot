@@ -1,7 +1,10 @@
 {
     "version": 2,
-    "name": "express",
+    "name": "webconf-bot",
     "builds": [
         { "src": "**/*.js", "use": "@now/node" }
-    ]
+    ],
+    "env": {
+        "TOKEN": "el token"
+      }
 }
