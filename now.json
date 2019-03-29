@@ -1,4 +1,7 @@
 {
     "version": 2,
-    "builds": [{ "src": "*/index.js", "use": "@now/node-server" }]
-  }
+    "name": "express",
+    "builds": [
+        { "src": "**/*.js", "use": "@now/node" }
+    ]
+}
