@@ -14,7 +14,7 @@ bot.on('/entradas', async function(msg){
     const mensaje = `Cantidad de entradas vendidas: ${entradas.ticketsSold} !! :D `;
 
     msg.reply.text(mensaje);
-    
+
 });
 
 // add some security-related headers to the response
