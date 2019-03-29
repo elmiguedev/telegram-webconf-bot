@@ -14,6 +14,10 @@ app.get('/', (req, res) => {
     res.send('webconf bot!! :D')
 })
 
+app.listen(process.env.PORT,function() {
+    bot.start();
+});
+
 module.exports = app
 
 
