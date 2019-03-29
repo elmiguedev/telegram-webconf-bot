@@ -14,11 +14,11 @@ app.get('/', (req, res) => {
     res.send('webconf bot!! :D')
 })
 
-app.listen(process.env.PORT,function() {
+app.listen(process.env.PORT || 8080,function() {
+    console.log('iniciando express');
     bot.start();
 });
 
-module.exports = app
 
 
 //bot.on('/taunts', function(msg){
