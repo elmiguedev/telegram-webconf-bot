@@ -5,6 +5,6 @@
         { "src": "**/*.js", "use": "@now/node" }
     ],
     "env": {
-        "TOKEN": "el token"
+        "TOKEN": "881166923:AAHT01GpcfeipSh-0yNxB9PH2d8wh7v4rq8"
       }
 }
