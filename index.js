@@ -6,7 +6,7 @@
 
 const TOKEN = process.env.TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
 const TelegramBot = require('node-telegram-bot-api');
-const request = require('request');
+const axios = require('axios');
 const options = {
   polling: true
 };
@@ -14,8 +14,9 @@ const bot = new TelegramBot(TOKEN, options);
 
 
 // Matches /love
-bot.onText(/\/entradas/, function onLoveText(msg) {
-  bot.sendMessage(msg.chat.id, 'y eia?');
+bot.onText(/\/entradas/, (msg) => {
+  
+    bot.sendMessage(msg.chat.id, 'y eia?');
 });
 
 
