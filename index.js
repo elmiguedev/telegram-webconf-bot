@@ -13,7 +13,7 @@ const options = {
 const bot = new TelegramBot(TOKEN, options);
 
 
-bot.onText(/\/entradas/, (msg) => {
+bot.onText(/\/entradas/, function onEntradasText(msg) {
     axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
         res => {
 //            const data = res;
