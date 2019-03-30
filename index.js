@@ -1,7 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
 const axios = require('axios');
-const TeleBot = require('telebot');
 
 const app = express();
 
@@ -26,6 +25,7 @@ const app = express();
 app.use(helmet())
 app.get('/', (req, res) => { res.send('webconf bot!! :D') });
 app.listen(process.env.PORT || 8080, function () {
+    const TeleBot = require('node-telegram-bot-api');
     const bot = new TeleBot(process.env.TOKEN);
     //   bot.start();
 });
