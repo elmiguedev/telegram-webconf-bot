@@ -6,7 +6,6 @@
 
 const TOKEN = process.env.TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
 const TelegramBot = require('node-telegram-bot-api');
-const axios = require('axios');
 const options = {
   polling: true
 };
@@ -14,7 +13,7 @@ const bot = new TelegramBot(TOKEN, options);
 
 
 bot.onText(/\/entradas/, function onEntradasText(msg) {
-    axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
+    fetch('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
         function(res) {
             bot.sendMessage(msg.chat.id, 'dsa: ');
         }
