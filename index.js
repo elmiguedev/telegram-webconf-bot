@@ -13,9 +13,25 @@ const bot = new TelegramBot(TOKEN, options);
 
 
 // Matches /love
-bot.onText(/\/entradas/, function (msg) {
+bot.onText(/\/entradas/, function onEntradasText(msg) {
     bot.sendMessage(msg.chat.id, "prueba entradas y eia?");
 });
 
+// Handle callback queries
+bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+  const opts = {
+    chat_id: msg.chat.id,
+    message_id: msg.message_id,
+  };
+  let text;
+
+  if (action === 'edit') {
+    text = 'Edited Text';
+  }
+
+  bot.editMessageText(text, opts);
+});
 
 module.exports = bot;
