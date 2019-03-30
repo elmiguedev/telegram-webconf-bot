@@ -13,9 +13,38 @@ const bot = new TelegramBot(TOKEN, options);
 
 
 // Matches /love
-bot.onText(/\/entradas/, function onEntradasText(msg) {
-    bot.sendMessage(msg.chat.id, "prueba entradas y eia?");
+bot.onText(/\/entradas/, function onLoveText(msg) {
+    bot.sendMessage(msg.chat.id, "prueba entradas");
+
 });
+
+
+// Matches /echo [whatever]
+bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
+  const resp = match[1];
+  bot.sendMessage(msg.chat.id, resp);
+});
+
+
+// Matches /editable
+bot.onText(/\/editable/, function onEditableText(msg) {
+  const opts = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'Edit Text',
+            // we shall check for this value when we listen
+            // for "callback_query"
+            callback_data: 'edit'
+          }
+        ]
+      ]
+    }
+  };
+  bot.sendMessage(msg.from.id, 'Original Text', opts);
+});
+
 
 // Handle callback queries
 bot.on('callback_query', function onCallbackQuery(callbackQuery) {
