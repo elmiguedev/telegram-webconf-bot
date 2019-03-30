@@ -3,7 +3,7 @@ const helmet = require('helmet')
 const axios = require('axios');
 const Telebot = require('telebot');
 
-const bot = new Telebot(process.env.TOKEN);
+const bot = new Telebot("881166923:AAHT01GpcfeipSh-0yNxB9PH2d8wh7v4rq8");
 const app = express()
 
 // define bot commands
