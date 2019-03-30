@@ -27,7 +27,7 @@ const app = express()
 app.use(helmet())
 app.get('/', (req, res) => {res.send('webconf bot!! :D')});
 app.listen(process.env.PORT || 8080, function() {
-    bot.start();
+ //   bot.start();
 });
 
 module.exports = app;
