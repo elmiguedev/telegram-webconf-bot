@@ -32,3 +32,5 @@ app.listen(process.env.PORT || 8080);
 //bot.on('/taunts', function(msg){
 //  return msg.reply.text(responses.taunts);
 //});
+
+module.exports = app;
