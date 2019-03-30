@@ -1,68 +1,36 @@
-/**
- * This example demonstrates using polling.
- * It also demonstrates how you would process and send messages.
- */
+//var token = process.env.TOKEN;
+var token = '881166923:AAHT01GpcfeipSh-0yNxB9PH2d8wh7v4rq8';
+var TelegramBot = require('node-telegram-bot-api');
+var request = require('request');
+var bot = new TelegramBot(token, {polling: true});
 
+bot.onText(/\/entradas/,function(msg,match){
+  var chatId = msg.chat.id;
+  var url = 'https://checkout.webconf.tech/api/hypes?include=y-eia';
+  request(url,function(err,res,body){
+    if (!err && res.statusCode === 200) {
+      var data = JSON.parse(body);
+      var entradas = data.data[0].attributes;
+      var ticketsSold = entradas.ticketsSold;
+      var ticketsBooked = entradas.ticketsBooked;
+      var ticketsBlocked = entradas.ticketsBlocked;
+      var ticketsAvailable = entradas.ticketsAvailable;
 
-const TOKEN = process.env.TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
-const TelegramBot = require('node-telegram-bot-api');
-const options = {
-  polling: true
-};
-const bot = new TelegramBot(TOKEN, options);
+      var texto = `RESUMEN: \n
+          Vendidas: ${ticketsSold}
+          Booked: ${ticketsBooked} 
+          Bloqueadas: ${ticketsBlocked} 
+          Disponibles: ${ticketsAvailable} 
+      `;
 
-
-bot.onText(/\/entradas/, function onEntradasText(msg) {
-    fetch('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
-        function(res) {
-            bot.sendMessage(msg.chat.id, 'dsa: ');
-        }
-    ); 
-});
-
-
-// Matches /echo [whatever]
-bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
-  const resp = match[1];
-  bot.sendMessage(msg.chat.id, resp);
-});
-
-
-// Matches /editable
-bot.onText(/\/editable/, function onEditableText(msg) {
-  const opts = {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'Edit Text',
-            // we shall check for this value when we listen
-            // for "callback_query"
-            callback_data: 'edit'
-          }
-        ]
-      ]
+      bot.sendMessage(chatId,texto);
     }
-  };
-  bot.sendMessage(msg.from.id, 'Original Text', opts);
+  });
 });
 
+setInterval(() => {
+  request('https://webconf-bot.mmoyano16.now.sh', function(e,r,b){
 
-// Handle callback queries
-bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-  const action = callbackQuery.data;
-  const msg = callbackQuery.message;
-  const opts = {
-    chat_id: msg.chat.id,
-    message_id: msg.message_id,
-  };
-  let text;
+  })
+}, 100000);
 
-  if (action === 'edit') {
-    text = 'Edited Text';
-  }
-
-  bot.editMessageText(text, opts);
-});
-
-module.exports = bot;

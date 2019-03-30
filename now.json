@@ -1,6 +1,8 @@
 {
+    "name": "webconf-bot",
     "version": 2,
-    "builds": [
-      { "src": "index.js", "use": "@now/node" }
-    ]
-  }
+    "builds": [{
+        "src": "index.js",
+        "use": "@now/node"
+    }]
+}
