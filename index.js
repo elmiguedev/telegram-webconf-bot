@@ -28,9 +28,4 @@ bot.onText(/\/entradas/,function(msg,match){
   });
 });
 
-setInterval(() => {
-  request('https://webconf-bot.mmoyano16.now.sh', function(e,r,b){
-
-  })
-}, 100000);
 
