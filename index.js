@@ -26,11 +26,15 @@ bot.on('/entradas', (msg) => {
 // add some security-related headers to the response
 app.use(helmet())
 app.get('/', (req, res) => {res.send('webconf bot!! :D')});
-app.listen(process.env.PORT || 8080,function() {
-    console.log('iniciando express');
-    bot.start();
-});
+app.listen(process.env.PORT || 8080);
+bot.start();
 
+setInterval(function() {
+  //setInterval(() => {
+  axios.get(process.env.PING).then(
+    res => console.log(res.data)
+  );
+},1000 * 60);
 
 //bot.on('/taunts', function(msg){
 //  return msg.reply.text(responses.taunts);
