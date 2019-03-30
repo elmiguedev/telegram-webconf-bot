@@ -15,7 +15,7 @@ const bot = new TelegramBot(TOKEN, options);
 
 bot.onText(/\/entradas/, function onEntradasText(msg) {
     axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
-        res => {
+        function(res) {
             const data = res;
             bot.sendMessage(msg.chat.id, 'dsa: ' + JSON.stringify(data));
 
