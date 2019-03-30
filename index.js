@@ -1,38 +1,75 @@
-const express = require('express')
-const helmet = require('helmet')
-const axios = require('axios');
-
-const app = express();
-
-// define bot commands
-// bot.on('/entradas', (msg) => {
+/**
+ * This example demonstrates using polling.
+ * It also demonstrates how you would process and send messages.
+ */
 
 
-//     axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
-//         res => {
-//             const entradas = res.data.data[0].attributes;
-//             // const mensaje = `Cantidad de entradas vendidas: ${entradas.ticketsSold} !! :D `;
-//             return msg.reply.text('test');
+const TOKEN = process.env.TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
+const TelegramBot = require('node-telegram-bot-api');
+const request = require('request');
+const options = {
+  polling: true
+};
+const bot = new TelegramBot(TOKEN, options);
 
-//         }
-//     );
 
-//     // msg.reply.text(mensaje);
-
-// });
-
-// add some security-related headers to the response
-app.use(helmet())
-app.get('/', (req, res) => { res.send('webconf bot!! :D') });
-app.listen(process.env.PORT || 8080, function () {
-    const TelegramBot = require('node-telegram-bot-api');
-    //const TeleBot = require('telebot');
-    const bot = new TelegramBot(process.env.TOKEN);
-    // Matches /echo [whatever]
-    bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
-        const resp = match[1];
-        bot.sendMessage(msg.chat.id, resp);
-    });
+// Matches /love
+bot.onText(/\/love/, function onLoveText(msg) {
+  const opts = {
+    reply_to_message_id: msg.message_id,
+    reply_markup: JSON.stringify({
+      keyboard: [
+        ['Yes, you are the bot of my life ❤'],
+        ['No, sorry there is another one...']
+      ]
+    })
+  };
+  bot.sendMessage(msg.chat.id, 'Do you love me?', opts);
 });
 
-module.exports = app;
+
+// Matches /echo [whatever]
+bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
+  const resp = match[1];
+  bot.sendMessage(msg.chat.id, resp);
+});
+
+
+// Matches /editable
+bot.onText(/\/editable/, function onEditableText(msg) {
+  const opts = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'Edit Text',
+            // we shall check for this value when we listen
+            // for "callback_query"
+            callback_data: 'edit'
+          }
+        ]
+      ]
+    }
+  };
+  bot.sendMessage(msg.from.id, 'Original Text', opts);
+});
+
+
+// Handle callback queries
+bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+  const opts = {
+    chat_id: msg.chat.id,
+    message_id: msg.message_id,
+  };
+  let text;
+
+  if (action === 'edit') {
+    text = 'Edited Text';
+  }
+
+  bot.editMessageText(text, opts);
+});
+
+module.exports = bot;
