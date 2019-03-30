@@ -1,7 +1,16 @@
 const express = require('express')
 const helmet = require('helmet')
 const axios = require('axios');
-const TeleBot = require('telebot');
+const TeleBot = require('node-telegram-bot');
+
+const bot = new TeleBot(process.env.TOKEN,{polling: true});
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+  
+    // send a message to the chat acknowledging receipt of their message
+    bot.sendMessage(chatId, 'Received your message');
+  });
+  
 
 const app = express();
 
@@ -14,7 +23,7 @@ const app = express();
 //             const entradas = res.data.data[0].attributes;
 //             // const mensaje = `Cantidad de entradas vendidas: ${entradas.ticketsSold} !! :D `;
 //             return msg.reply.text('test');
-
+            
 //         }
 //     );
 
@@ -24,13 +33,9 @@ const app = express();
 
 // add some security-related headers to the response
 app.use(helmet())
-app.get('/', (req, res) => { res.send('webconf bot!! :D') });
-app.listen(process.env.PORT || 8080, function () {
-    const bot = new TeleBot(process.env.TOKEN);
-
-    bot.on('text', (msg) => msg.reply.text(msg.text));
-
-bot.start();
+app.get('/', (req, res) => {res.send('webconf bot!! :D')});
+app.listen(process.env.PORT || 8080, function() {
+ //   bot.start();
 });
 
 //module.exports = app;
