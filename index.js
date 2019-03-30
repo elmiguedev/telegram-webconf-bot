@@ -1,9 +1,9 @@
 const express = require('express')
 const helmet = require('helmet')
 const axios = require('axios');
-// const Telebot = require('telebot');
+const Telebot = require('telebot');
 
-// const bot = new Telebot(process.env.TOKEN);
+const bot = new Telebot(process.env.TOKEN);
 const app = express()
 
 // define bot commands
@@ -26,11 +26,8 @@ const app = express()
 // add some security-related headers to the response
 app.use(helmet())
 app.get('/', (req, res) => {res.send('webconf bot!! :D')});
-app.listen(process.env.PORT || 8080);
-// bot.start();
-
-//bot.on('/taunts', function(msg){
-//  return msg.reply.text(responses.taunts);
-//});
+app.listen(process.env.PORT || 8080, function() {
+    bot.start();
+});
 
 module.exports = app;
