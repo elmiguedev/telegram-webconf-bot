@@ -15,8 +15,14 @@ const bot = new TelegramBot(TOKEN, options);
 
 // Matches /love
 bot.onText(/\/entradas/, (msg) => {
-  
-    bot.sendMessage(msg.chat.id, 'y eia?');
+    axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
+        res => {
+            const data = res.data;
+            const entradas = data[o].attributes;
+            bot.sendMessage(msg.chat.id, 'y eia?');
+
+        }
+    ); 
 });
 
 
