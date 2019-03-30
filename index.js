@@ -1,9 +1,9 @@
 const express = require('express')
 const helmet = require('helmet')
 const axios = require('axios');
-const TeleBot = require('telebot');
+const TeleBot = require('node-telegram-bot-api');
 
-const bot = new TeleBot({token: process.env.TOKEN});
+const bot = new TeleBot(process.env.TOKEN);
 const app = express();
 
 // define bot commands
