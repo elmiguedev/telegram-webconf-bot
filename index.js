@@ -27,12 +27,10 @@ app.use(helmet())
 app.get('/', (req, res) => { res.send('webconf bot!! :D') });
 app.listen(process.env.PORT || 8080, function () {
     const bot = new TeleBot(process.env.TOKEN);
-    bot.on('/entradas', (msg) => {
-        return msg.reply.text('y eia');
-    });
-    
-    
-    bot.start();
+
+    bot.on('text', (msg) => msg.reply.text(msg.text));
+
+bot.start();
 });
 
 //module.exports = app;
