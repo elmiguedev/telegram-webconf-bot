@@ -25,11 +25,14 @@ const app = express();
 app.use(helmet())
 app.get('/', (req, res) => { res.send('webconf bot!! :D') });
 app.listen(process.env.PORT || 8080, function () {
-    const TeleBot = require('node-telegram-bot-api');
+    const TelegramBot = require('node-telegram-bot-api');
     //const TeleBot = require('telebot');
-    const bot = new TeleBot(process.env.TOKEN);
-    
-    bot.start();
+    const bot = new TelegramBot(process.env.TOKEN);
+    // Matches /echo [whatever]
+    bot.onText(/\/echo (.+)/, function onEchoText(msg, match) {
+        const resp = match[1];
+        bot.sendMessage(msg.chat.id, resp);
+    });
 });
 
 module.exports = app;
