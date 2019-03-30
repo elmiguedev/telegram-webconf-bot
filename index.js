@@ -13,12 +13,11 @@ const options = {
 const bot = new TelegramBot(TOKEN, options);
 
 
-// Matches /love
 bot.onText(/\/entradas/, (msg) => {
     axios.get('https://checkout.webconf.tech/api/hypes?include=y-eia').then(
         res => {
-            const data = res;
-            bot.sendMessage(msg.chat.id, JSON.stringify(data));
+//            const data = res;
+            bot.sendMessage(msg.chat.id, 'dsa');
 
         }
     ); 
