@@ -10,6 +10,7 @@ const request = require('request');
 const options = {
   polling: true
 };
+const bot = new TelegramBot(TOKEN, options);
 
 
 // Matches /love
