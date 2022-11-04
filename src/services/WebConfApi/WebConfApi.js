@@ -38,7 +38,7 @@ class WebConfApi {
     let oldSummary = null;
     setInterval(async () => {
       const summary = await this.getTicketsSummary();
-      if (JSON.stringify(summary) !== JSON.stringify(oldSummary)) {
+      if (summary.reserved !== oldSummary.reserved) {
         this.subscribers.forEach(chatId => {
           callback(chatId);
         });
