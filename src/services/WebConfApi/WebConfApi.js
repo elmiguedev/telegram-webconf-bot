@@ -6,14 +6,22 @@ class WebConfApi {
   static subscribers = [];
 
   static async getTickets() {
-    const request = await fetch(process.env.TICKETS_URL);
-    const tickets = await request.json();
-    return tickets.map(t => new TicketState(t));
+    try {
+      const request = await fetch(process.env.TICKETS_URL);
+      const tickets = await request.json();
+      return tickets.map(t => new TicketState(t));
+    } catch (error) {
+
+    }
+
   }
 
   static async getTicketsSummary() {
     const tickets = await this.getTickets();
-    return new TicketsSummary(tickets);
+    if (tickets)
+      return new TicketsSummary(tickets);
+    else
+      return undefined;
   }
 
   static getTicketsSummaryDonnut(summary) {
@@ -38,11 +46,15 @@ class WebConfApi {
     let oldSummary = null;
     setInterval(async () => {
       const summary = await this.getTicketsSummary();
-      if (oldSummary === null || summary.reserved !== oldSummary.reserved) {
-        this.subscribers.forEach(chatId => {
-          callback(chatId);
-        });
-        oldSummary = summary;
+      if (summary) {
+        if (oldSummary === null || summary.reserved !== oldSummary.reserved) {
+          this.subscribers.forEach(chatId => {
+            callback(chatId);
+          });
+          oldSummary = summary;
+        }
+      } else {
+        console.log("fetch failed :(")
       }
     }, 5000)
 
